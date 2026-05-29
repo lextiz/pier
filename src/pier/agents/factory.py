@@ -8,6 +8,7 @@ from pier.agents.installed.cursor_cli import CursorCli
 from pier.agents.installed.gemini_cli import GeminiCli
 from pier.agents.installed.mini_swe_agent import MiniSweAgent
 from pier.agents.installed.opencode import OpenCode
+from pier.agents.installed.pi import Pi
 from pier.agents.nop import NopAgent
 from pier.agents.oracle import OracleAgent
 from pier.models.agent.name import AgentName
@@ -25,6 +26,7 @@ class AgentFactory:
         GeminiCli,
         MiniSweAgent,
         OpenCode,
+        Pi,
     ]
     _AGENT_MAP: dict[AgentName, type[BaseAgent]] = {
         AgentName(agent.name()): agent for agent in _AGENTS

@@ -49,6 +49,7 @@ def collect_url_values(value: Any, *, keys: set[str] | None = None) -> list[str]
         "api_base",
         "api_url",
         "base_url",
+        "baseUrl",
         "baseurl",
         "baseURL",
         "openai_base_url",

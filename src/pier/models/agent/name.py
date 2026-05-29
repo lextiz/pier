@@ -11,6 +11,7 @@ class AgentName(str, Enum):
     MINI_SWE_AGENT = "mini-swe-agent"
     SWE_AGENT = "swe-agent"
     OPENCODE = "opencode"
+    PI = "pi"
     TAIGA = "taiga"
 
     @classmethod

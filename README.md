@@ -19,7 +19,7 @@ Pier is a fork. We wanted a smaller, more opinionated base to build on. On top o
 
 - **Task format:** Harbor-compatible.
 - **Environments:** `docker`, `modal`. Per-agent install specs and network allowlists are honored on both, so installed agents work under `allow_internet = false`.
-- **Agents:** `nop`, `oracle`, `claude-code`, `codex`, `cursor-cli`, `gemini-cli`, `opencode`, `mini-swe-agent`. All emit augmented ATIF v1.7.
+- **Agents:** `nop`, `oracle`, `claude-code`, `codex`, `cursor-cli`, `gemini-cli`, `opencode`, `pi`, `mini-swe-agent`. All emit augmented ATIF v1.7.
 - **Datasets:** local Harbor-format task directories via `-p` / `--path`.
 - **CLI:** `pier run`, `pier job`, `pier view`, `pier critique run`, `pier check` / `pier analyze` (vendored from Harbor)
 
@@ -117,6 +117,20 @@ through your env file.
 ```
 
 **OpenCode** uses `opencode_config` to add unknown providers or override known ones. To redirect Google to Respan, override just `options.baseURL`; to add a fully custom provider, use `opencode_config.provider.<name>` with the npm package, options, and models.
+
+**Pi** installs the official npm package `@earendil-works/pi-coding-agent` and runs `pi --mode json --no-session` with an isolated `PI_CODING_AGENT_DIR`. For OpenAI-compatible endpoints, set `model_name` to `<provider>/<model>` and provide a base URL through `kwargs.base_url` or `OPENAI_BASE_URL`; Pier writes the small Pi `models.json` entry for that provider.
+
+```yaml
+- name: pi
+  model_name: openai/gemma4-26b-a4b-it-q6.gguf
+  env:
+    OPENAI_API_KEY: sk-local
+  kwargs:
+    base_url: http://host.docker.internal:8080/v1
+    thinking: off
+```
+
+Use `kwargs.api_key_env` when the API key is stored in an env var other than `OPENAI_API_KEY`.
 
 **mini-swe-agent** picks a native adapter from the model-name prefix: `openai/...` → `litellm_response` (OpenAI Responses end-to-end), `openrouter/...` → `openrouter` (BYOK costs from `cost_details.upstream_inference_cost`), everything else → LiteLLM auto.
 
